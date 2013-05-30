@@ -1,0 +1,7 @@
+int funcionflotante (int k, int m) {
+	if (k == 0) 
+		return k;
+	else
+		return m
+}
+
