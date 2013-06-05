@@ -1,7 +1,13 @@
+# -*- enconding: utf-8 -*-
+
+# Referencia: http://www.juanjoconti.com.ar/2007/11/02/minilisp-un-ejemplo-de-ply/
+
 import ply.yacc as yacc
 from cminus_lexer import tokens
 import cminus_lexer
 import sys
+
+VERBOSE = 1
 
 def p_program(p):
 	'program : declaration_list'
@@ -9,7 +15,8 @@ def p_program(p):
 
 def p_declaration_list_1(p):
 	'declaration_list : declaration_list declaration'
-	#p[0]dd = p[1] + p[2]  # DUDA  --> si es asi, pero de momento lo voy a hacer con pass
+	 #p[0] = p[1] + p[2]  
+	pass
 
 def p_declaration_list_2(p):
 	'declaration_list : declaration'
@@ -29,12 +36,8 @@ def p_var_declaration_2(p):
 	pass
 
 def p_type_specifier_1(p):
-	'type_specifier: CHAR\SHORT\INT\LONG\FLOAT\DOUBLE\SIGNED'
+	'type_specifier : INT'
 	pass
-
-#def p_type_specifier_1(p):
-#	'type_specifier : INT'
-#	pass
 
 def p_type_specifier_2(p):
 	'type_specifier : VOID'
@@ -61,6 +64,10 @@ def p_param_list_1(p):
 
 def p_param_list_2(p):
 	'param_list : param'
+	pass
+
+def p_param_list_3(p):
+	'param_list : empty'
 	pass
 
 def p_param_1(p):
@@ -232,10 +239,14 @@ def p_empty(p):
 def p_error(p):
 	#print str(dir(p))
 	#print str(dir(cminus_lexer))
-	if p is not None:
-		print "bebe, tienes un error de sintaxis en la linea: " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value)
+	if VERBOSE:
+		if p is not None:
+			print "Syntax error at line " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value)
+		else:
+			print "Syntax error at line: " + str(cminus_lexer.lexer.lineno)
 	else:
-		print "bebe, tienes un error de sintaxis en la linea: " + str(cminus_lexer.lexer.lineno)
+		raise Exception('syntax', 'error')
+		
 
 parser = yacc.yacc()
 
@@ -244,7 +255,7 @@ if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		fin = sys.argv[1]
 	else:
-		fin = 'examples/cicloprueba.c'
+		fin = 'examples/gcd.c'
 
 	f = open(fin, 'r')
 	data = f.read()
