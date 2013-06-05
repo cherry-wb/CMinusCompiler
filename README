@@ -1,2 +1,5 @@
 compilador de miniC, utilizando la libreria python-ply
-trabajo final para la materia compiladores UTP
+trabajo final para la materia compiladores Utp.
+basado en el proyecto https://bitbucket.org/jjfumero/cminus
+
+choff
