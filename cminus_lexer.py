@@ -16,9 +16,11 @@ tokens = (
 	'ELSE',
 	'IF',
 	'INT',
+        'FLOAT',
 	'RETURN',
 	'VOID',
 	'WHILE',
+        'FOR',
 	
 	# Symbols
 	'PLUS',
@@ -74,6 +76,10 @@ def t_IF(t):
 def t_INT(t):
 	r'int'
 	return t
+
+def t_FLOAT(t):
+	r'float'
+	return t
 	
 def t_RETURN(t):
 	r'return'
@@ -86,6 +92,10 @@ def t_VOID(t):
 def t_WHILE(t):
 	r'while'
 	return t
+
+def t_FOR(t):
+        r'for'
+        return t
 	
 def t_NUMBER(t):
 	r'\d+'
@@ -131,7 +141,7 @@ def t_error(t):
 	t.lexer.skip(1)
 
 def test(data, lexer):
-	lexer.input(data)
+        lexer.input(data)
 	while True:
 		tok = lexer.token()
 		if not tok:
@@ -146,10 +156,10 @@ if __name__ == '__main__':
 	# Test
 	data = '''
 		/* comentario
-   			de varias lineas
+                 de varias lineas
 		*/
 		void main (int argc) {
-			int a;
+			float a;
 			a = 10;
 			// Esto es otro comentario
 			return 0;
