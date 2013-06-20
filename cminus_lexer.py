@@ -1,11 +1,3 @@
-# -*- encondig: utf-8 -*-
-
-# --------------------------------------
-# c minus lexer
-# --------------------------------------
-
-# NEW: 	comments in classic C
-# 		comentario in C99 standard
 
 import ply.lex as lex
 
@@ -16,11 +8,17 @@ tokens = (
 	'ELSE',
 	'IF',
 	'INT',
-        'FLOAT',
+    'WHILE',
 	'RETURN',
+    'CHAR',
+    'LONG',
+    'FLOAT',
+    'DOUBLE',
+    'SIGNED',
+    'SHORT',
 	'VOID',
-	'WHILE',
-        'FOR',
+    'FOR',
+    'DO', 
 	
 	# Symbols
 	'PLUS',
@@ -42,6 +40,7 @@ tokens = (
 	'RBRACKET',
 	'LBLOCK',
 	'RBLOCK',
+    'DOSPUNTOS',
 
 	# Others	
 	'ID', 
@@ -64,6 +63,41 @@ t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
 t_LBLOCK   = r'{'
 t_RBLOCK   = r'}'
+t_DOSPUNTOS   = r':'
+
+
+def t_DO(t):
+	r'do'
+	return t
+
+def t_FOR(t):
+	r'for'
+	return t
+
+def t_CHAR(t):
+	r'char'
+	return t
+
+def t_SHORT(t):
+	r'short'
+	return t
+
+def t_LONG(t):
+	r'long'
+	return t
+
+def t_FLOAT(t):
+	r'float'
+	return t
+
+def t_DOUBLE(t):
+	r'double'
+	return t
+
+def t_SIGNED(t):
+	r'signed'
+	return t
+
 
 def t_ELSE(t):
 	r'else'
@@ -75,10 +109,6 @@ def t_IF(t):
 
 def t_INT(t):
 	r'int'
-	return t
-
-def t_FLOAT(t):
-	r'float'
 	return t
 	
 def t_RETURN(t):
@@ -92,10 +122,6 @@ def t_VOID(t):
 def t_WHILE(t):
 	r'while'
 	return t
-
-def t_FOR(t):
-        r'for'
-        return t
 	
 def t_NUMBER(t):
 	r'\d+'
@@ -128,8 +154,9 @@ def t_newline(t):
 
 t_ignore = ' \t'
 
+
 def t_comments(t):
-	r'/\*(.|\n)*?\*/'
+	r'/*(.|\n)*?\*/'
 	t.lexer.lineno += t.value.count('\n')
 
 def t_comments_C99(t):
@@ -140,8 +167,9 @@ def t_error(t):
 	print "Lexical error: " + str(t.value[0])
 	t.lexer.skip(1)
 
+
 def test(data, lexer):
-        lexer.input(data)
+	lexer.input(data)
 	while True:
 		tok = lexer.token()
 		if not tok:
@@ -156,13 +184,16 @@ if __name__ == '__main__':
 	# Test
 	data = '''
 		/* comentario
-                 de varias lineas
+   			de varias lineas
 		*/
 		void main (int argc) {
-			float a;
+		      while(x>0)
+		      {
+			int a;
 			a = 10;
 			// Esto es otro comentario
 			return 0;
+			}
 		}
 	'''
 

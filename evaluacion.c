@@ -3,7 +3,7 @@ int evalua(int a, int b, float c){
   float r;	
 //este es un comentario  	
 	if (a>0)
-    	  p=a+1;
+    	  //p=a+1;
   	else
           q=b;		;
            if (b>0){
